@@ -47,17 +47,18 @@
 
 .welcome-content {
     text-align: center;
-    padding: 40px;
+    padding: 30px 20px;
     border: 2px solid var(--gold-primary);
-    border-radius: 30px;
-    background: rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(10px);
     box-shadow: 0 0 50px rgba(255, 215, 0, 0.2);
-    max-width: 90%;
+    width: 90%;
+    max-width: 450px;
 }
 
 .welcome-horse-icon {
-    font-size: 60px;
+    font-size: clamp(40px, 10vw, 60px);
     margin-bottom: 20px;
     animation: bounce 2s infinite;
 }
@@ -65,7 +66,7 @@
 .welcome-title {
     font-family: var(--font-script);
     color: var(--gold-primary);
-    font-size: 42px;
+    font-size: clamp(28px, 8vw, 42px);
     margin-bottom: 15px;
 }
 
@@ -73,12 +74,12 @@
     font-family: var(--font-body);
     color: var(--text-light);
     margin-bottom: 30px;
-    font-size: 18px;
+    font-size: clamp(14px, 4vw, 18px);
 }
 
 #start-btn {
-    padding: 15px 40px;
-    font-size: 20px;
+    padding: 12px 30px;
+    font-size: clamp(16px, 4.5vw, 20px);
     font-family: var(--font-body);
     background: linear-gradient(45deg, var(--gold-primary), #ff9900);
     border: none;
@@ -1072,7 +1073,22 @@ main {
     }
 }
 
-/* --- Responsive --- */
+/* --- Responsive Updates --- */
+@media (max-width: 1024px) {
+    .horse {
+        width: 100px;
+        bottom: 100px;
+    }
+
+    .horse-left {
+        left: 20px;
+    }
+
+    .horse-right {
+        right: 20px;
+    }
+}
+
 @media (max-width: 768px) {
     .lantern-body {
         width: 40px;
@@ -1092,7 +1108,7 @@ main {
     }
 
     .love-card {
-        padding: 35px 25px;
+        padding: 40px 25px;
     }
 
     .highlight-grid,
@@ -1105,6 +1121,20 @@ main {
         width: 220px;
         height: 140px;
     }
+
+    .photo-card {
+        flex: 0 0 240px;
+        /* Smaller cards for mobile */
+    }
+
+    .photo-img {
+        height: 280px;
+    }
+
+    .horse {
+        width: 80px;
+        bottom: 80px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1115,19 +1145,56 @@ main {
     }
 
     .love-card {
-        padding: 25px 18px;
+        padding: 30px 15px;
+    }
+
+    .love-photo {
+        max-width: 100%;
     }
 
     .year-badge {
-        padding: 8px 20px;
+        padding: 6px 15px;
     }
 
     .zodiac-icon {
-        font-size: 28px;
+        font-size: 24px;
     }
 
     .year-text {
-        font-size: 24px;
+        font-size: 20px;
+    }
+
+    .photo-card {
+        flex: 0 0 85%;
+        /* Almost full width for mobile portrait */
+    }
+
+    .photo-img {
+        height: 320px;
+    }
+
+    .horse {
+        width: 60px;
+        bottom: 70px;
+    }
+
+    .horse-left {
+        left: 10px;
+    }
+
+    .horse-right {
+        right: 10px;
+    }
+
+    .main-title {
+        margin-bottom: 10px;
+    }
+
+    .music-toggle {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
     }
 }
 
@@ -1392,15 +1459,4 @@ main {
     }
 }
 
-/* Ẩn trên mobile để không che chữ */
-@media (max-width: 1024px) {
-    .horse {
-        width: 100px;
-    }
-}
-
-@media (max-width: 768px) {
-    .horse {
-        display: none;
-    }
-}
+/* --- Removed redundant responsive block for horses --- */

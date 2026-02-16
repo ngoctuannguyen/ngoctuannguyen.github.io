@@ -49,7 +49,8 @@ class Firework {
             [255, 140, 0],   // Orange
         ];
         const color = colors[Math.floor(Math.random() * colors.length)];
-        const count = 60 + Math.floor(Math.random() * 40);
+        const isMobile = window.innerWidth < 768;
+        const count = isMobile ? 30 + Math.floor(Math.random() * 20) : 60 + Math.floor(Math.random() * 40);
 
         for (let i = 0; i < count; i++) {
             const angle = (Math.PI * 2 / count) * i;
@@ -362,22 +363,33 @@ function initMusicAndOverlay() {
 window.addEventListener('load', initMusicAndOverlay);
 
 // =====================
-// SPARKLE ON CLICK
+// SPARKLE ON CLICK (and Touch)
 // =====================
-document.addEventListener('click', (e) => {
+function createSparkles(x, y) {
     const sparkles = ['✨', '🌟', '💫', '💖', '🌸'];
-    for (let i = 0; i < 5; i++) {
+    const count = window.innerWidth < 768 ? 3 : 5;
+    for (let i = 0; i < count; i++) {
         setTimeout(() => {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
             sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
-            sparkle.style.left = (e.clientX + (Math.random() - 0.5) * 60) + 'px';
-            sparkle.style.top = (e.clientY + (Math.random() - 0.5) * 60) + 'px';
+            sparkle.style.left = (x + (Math.random() - 0.5) * 60) + 'px';
+            sparkle.style.top = (y + (Math.random() - 0.5) * 60) + 'px';
             document.body.appendChild(sparkle);
             setTimeout(() => sparkle.remove(), 900);
         }, i * 80);
     }
+}
+
+document.addEventListener('click', (e) => {
+    createSparkles(e.clientX, e.clientY);
 });
+
+document.addEventListener('touchstart', (e) => {
+    if (e.touches && e.touches[0]) {
+        createSparkles(e.touches[0].clientX, e.touches[0].clientY);
+    }
+}, { passive: true });
 
 // =====================
 // PARALLAX ON SCROLL
