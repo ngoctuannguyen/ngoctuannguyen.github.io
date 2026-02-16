@@ -319,8 +319,13 @@ const luckyMessages = [
 ];
 
 let envelopeOpened = false;
+let currentLuckyIdx = 0;
+let canClickEnvelope = true;
 
 function openEnvelope() {
+    if (!canClickEnvelope) return;
+
+    canClickEnvelope = false;
     const envelope = document.getElementById('envelope');
     const messageEl = document.getElementById('lucky-message');
 
@@ -330,18 +335,32 @@ function openEnvelope() {
         envelopeOpened = false;
 
         setTimeout(() => {
-            const randomMsg = luckyMessages[Math.floor(Math.random() * luckyMessages.length)];
-            messageEl.textContent = randomMsg;
+            const nextMsg = luckyMessages[currentLuckyIdx];
+            messageEl.textContent = nextMsg;
+            currentLuckyIdx = (currentLuckyIdx + 1) % luckyMessages.length;
+
             envelope.classList.add('opened');
             envelopeOpened = true;
             createCelebration(envelope);
-        }, 500);
+
+            // Cho phép click lại sau khi hiệu ứng mở hoàn tất
+            setTimeout(() => {
+                canClickEnvelope = true;
+            }, 1000);
+        }, 600);
     } else {
-        const randomMsg = luckyMessages[Math.floor(Math.random() * luckyMessages.length)];
-        messageEl.textContent = randomMsg;
+        const nextMsg = luckyMessages[currentLuckyIdx];
+        messageEl.textContent = nextMsg;
+        currentLuckyIdx = (currentLuckyIdx + 1) % luckyMessages.length;
+
         envelope.classList.add('opened');
         envelopeOpened = true;
         createCelebration(envelope);
+
+        // Cho phép click lại sau khi hiệu ứng mở hoàn tất
+        setTimeout(() => {
+            canClickEnvelope = true;
+        }, 1000);
     }
 }
 
