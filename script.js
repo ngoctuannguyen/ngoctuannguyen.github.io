@@ -46,8 +46,6 @@ class Firework {
     }
 
     update() {
-        this.trail.push({ x: this.x, y: this.y });
-        if (this.trail.length > 12) this.trail.shift();
         this.y -= this.speed;
         this.x += (Math.random() - 0.5) * 0.5;
         if (this.y <= this.targetY) {
@@ -64,7 +62,7 @@ class Firework {
 
         switch (type) {
             case 'circle': {
-                const count = Math.floor(120 * m); // Tăng từ 70
+                const count = Math.floor(80 * m);
                 for (let i = 0; i < count; i++) {
                     const angle = (Math.PI * 2 / count) * i;
                     const speed = 2 + Math.random() * 6; // Tăng từ 1.5 - 4
@@ -74,7 +72,7 @@ class Firework {
                 break;
             }
             case 'ring': {
-                const count = Math.floor(100 * m); // Tăng từ 60
+                const count = Math.floor(70 * m);
                 const speed = 4 + Math.random() * 3; // Tăng từ 3 - 2
                 for (let i = 0; i < count; i++) {
                     const angle = (Math.PI * 2 / count) * i;
@@ -84,7 +82,7 @@ class Firework {
                 break;
             }
             case 'willow': {
-                const count = Math.floor(80 * m); // Tăng từ 50
+                const count = Math.floor(60 * m);
                 for (let i = 0; i < count; i++) {
                     const angle = (Math.PI * 2 / count) * i;
                     const speed = 1.5 + Math.random() * 4; // Tăng từ 1 - 3
@@ -93,7 +91,7 @@ class Firework {
                 break;
             }
             case 'sparkle': {
-                const count = Math.floor(100 * m); // Tăng từ 40
+                const count = Math.floor(70 * m);
                 for (let i = 0; i < count; i++) {
                     const angle = Math.random() * Math.PI * 2;
                     const speed = 1 + Math.random() * 7; // Tăng từ 0.5 - 5
@@ -103,8 +101,8 @@ class Firework {
                 break;
             }
             case 'double': {
-                const innerC = Math.floor(50 * m);
-                const outerC = Math.floor(90 * m);
+                const innerC = Math.floor(40 * m);
+                const outerC = Math.floor(70 * m);
                 for (let i = 0; i < innerC; i++) {
                     const angle = (Math.PI * 2 / innerC) * i;
                     const speed = 2 + Math.random() * 2;
@@ -121,22 +119,10 @@ class Firework {
     }
 
     draw() {
-        for (let i = 0; i < this.trail.length; i++) {
-            const alpha = (i / this.trail.length) * 0.3 * this.brightness; // Giảm từ 0.6
-            const size = (i / this.trail.length) * 2;
-            ctx.beginPath();
-            ctx.arc(this.trail[i].x, this.trail[i].y, size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 230, 150, ${alpha})`;
-            ctx.fill();
-        }
         ctx.beginPath();
         ctx.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 230, ${this.brightness * 0.5})`; // Giảm độ sáng đầu đạn
+        ctx.fillStyle = `rgba(255, 255, 230, ${this.brightness * 0.8})`;
         ctx.fill();
-        ctx.shadowBlur = 8; // Giảm từ 15
-        ctx.shadowColor = `rgba(255, 215, 0, ${this.brightness * 0.3})`; // Giảm opacity shadow
-        ctx.fill();
-        ctx.shadowBlur = 0;
     }
 }
 
@@ -152,35 +138,29 @@ class EnhancedParticle {
         this.trail = [];
         switch (type) {
             case 'willow':
-                this.decay = 0.003 + Math.random() * 0.005; // Cháy lâu hơn
+                this.decay = 0.003 + Math.random() * 0.005;
                 this.gravity = 0.04;
-                this.size = 2 + Math.random() * 1.5; // To hơn
-                this.trailLen = 15;
+                this.size = 2 + Math.random() * 1.5;
                 break;
             case 'ring':
                 this.decay = 0.01 + Math.random() * 0.008;
                 this.gravity = 0.015;
-                this.size = 3 + Math.random() * 2; // To hơn
-                this.trailLen = 5;
+                this.size = 3 + Math.random() * 2;
                 break;
             case 'sparkle':
                 this.decay = 0.005 + Math.random() * 0.01;
                 this.gravity = 0.015;
-                this.size = 2 + Math.random() * 3; // To hơn
-                this.trailLen = 8;
+                this.size = 2 + Math.random() * 3;
                 this.twinkle = Math.random() * Math.PI;
                 break;
             default:
                 this.decay = 0.006 + Math.random() * 0.01;
                 this.gravity = 0.025;
-                this.size = 2.5 + Math.random() * 2; // To hơn
-                this.trailLen = 7;
+                this.size = 2.5 + Math.random() * 2;
         }
     }
 
     update() {
-        this.trail.push({ x: this.x, y: this.y, alpha: this.alpha });
-        if (this.trail.length > this.trailLen) this.trail.shift();
         this.vx *= 0.985;
         this.vy += this.gravity;
         this.x += this.vx;
@@ -190,26 +170,12 @@ class EnhancedParticle {
     }
 
     draw() {
-        for (let i = 0; i < this.trail.length; i++) {
-            const t = this.trail[i];
-            const a = (i / this.trail.length) * t.alpha * 0.2; // Giảm từ 0.35
-            ctx.beginPath();
-            ctx.arc(t.x, t.y, this.size * 0.4, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${a})`;
-            ctx.fill();
-        }
-        let dAlpha = this.alpha * 0.6; // Giảm độ trong suốt tổng thể xuống 60%
+        let dAlpha = this.alpha * 0.6;
         if (this.type === 'sparkle') dAlpha *= 0.5 + 0.5 * Math.sin(this.twinkle);
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${dAlpha})`;
         ctx.fill();
-        if (dAlpha > 0.2) {
-            ctx.shadowBlur = 6; // Giảm từ 12
-            ctx.shadowColor = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${dAlpha * 0.4})`;
-            ctx.fill();
-            ctx.shadowBlur = 0;
-        }
     }
 }
 
@@ -279,7 +245,7 @@ function createPetal() {
 }
 
 // Create petals periodically
-setInterval(createPetal, 600);
+setInterval(createPetal, 1000);
 // Initial batch
 for (let i = 0; i < 12; i++) {
     setTimeout(createPetal, i * 200);

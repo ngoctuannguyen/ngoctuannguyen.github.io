@@ -51,7 +51,8 @@
     border: 2px solid var(--gold-primary);
     border-radius: 20px;
     background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     box-shadow: 0 0 50px rgba(255, 215, 0, 0.2);
     width: 90%;
     max-width: 450px;
@@ -168,7 +169,7 @@ body {
     opacity: 0.8;
     animation: fall linear infinite, sway ease-in-out infinite;
     pointer-events: none;
-    filter: drop-shadow(0 0 4px rgba(255, 182, 193, 0.5));
+    text-shadow: 0 0 5px rgba(255, 182, 193, 0.8);
 }
 
 @keyframes fall {
@@ -574,7 +575,8 @@ main {
     border: 1px solid var(--card-border);
     border-radius: 24px;
     padding: 50px 40px;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     box-shadow: var(--shadow-glow), 0 20px 60px rgba(0, 0, 0, 0.3);
     position: relative;
     overflow: hidden;
@@ -1157,7 +1159,8 @@ main {
     border: 2px solid var(--gold-primary);
     border-radius: 50%;
     background: rgba(26, 10, 10, 0.8);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -1564,8 +1567,8 @@ main {
     transform: translateX(-50%);
     z-index: 10000;
     background: rgba(26, 10, 10, 0.7);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 214, 0, 0.3);
     padding: 10px 25px;
     border-radius: 50px;
