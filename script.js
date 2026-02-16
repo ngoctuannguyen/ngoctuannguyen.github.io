@@ -122,19 +122,19 @@ class Firework {
 
     draw() {
         for (let i = 0; i < this.trail.length; i++) {
-            const alpha = (i / this.trail.length) * 0.6 * this.brightness;
-            const size = (i / this.trail.length) * 2.5;
+            const alpha = (i / this.trail.length) * 0.3 * this.brightness; // Giảm từ 0.6
+            const size = (i / this.trail.length) * 2;
             ctx.beginPath();
             ctx.arc(this.trail[i].x, this.trail[i].y, size, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(255, 230, 150, ${alpha})`;
             ctx.fill();
         }
         ctx.beginPath();
-        ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 230, ${this.brightness})`;
+        ctx.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 230, ${this.brightness * 0.5})`; // Giảm độ sáng đầu đạn
         ctx.fill();
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = `rgba(255, 215, 0, ${this.brightness})`;
+        ctx.shadowBlur = 8; // Giảm từ 15
+        ctx.shadowColor = `rgba(255, 215, 0, ${this.brightness * 0.3})`; // Giảm opacity shadow
         ctx.fill();
         ctx.shadowBlur = 0;
     }
@@ -192,21 +192,21 @@ class EnhancedParticle {
     draw() {
         for (let i = 0; i < this.trail.length; i++) {
             const t = this.trail[i];
-            const a = (i / this.trail.length) * t.alpha * 0.35;
+            const a = (i / this.trail.length) * t.alpha * 0.2; // Giảm từ 0.35
             ctx.beginPath();
             ctx.arc(t.x, t.y, this.size * 0.4, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${a})`;
             ctx.fill();
         }
-        let dAlpha = this.alpha;
+        let dAlpha = this.alpha * 0.6; // Giảm độ trong suốt tổng thể xuống 60%
         if (this.type === 'sparkle') dAlpha *= 0.5 + 0.5 * Math.sin(this.twinkle);
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${dAlpha})`;
         ctx.fill();
-        if (dAlpha > 0.3) {
-            ctx.shadowBlur = 12;
-            ctx.shadowColor = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${dAlpha * 0.6})`;
+        if (dAlpha > 0.2) {
+            ctx.shadowBlur = 6; // Giảm từ 12
+            ctx.shadowColor = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${dAlpha * 0.4})`;
             ctx.fill();
             ctx.shadowBlur = 0;
         }
