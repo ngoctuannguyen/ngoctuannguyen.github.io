@@ -32,7 +32,11 @@ const EXPLOSION_TYPES = ['circle', 'ring', 'willow', 'sparkle', 'double'];
 
 class Firework {
     constructor() {
-        this.x = canvas.width * 0.15 + Math.random() * canvas.width * 0.7;
+        // Chỉ xuất hiện ở 2 bên (25% lề trái hoặc 25% lề phải)
+        const isLeft = Math.random() > 0.5;
+        this.x = isLeft
+            ? Math.random() * (canvas.width * 0.25)
+            : canvas.width * 0.75 + Math.random() * (canvas.width * 0.25);
         this.y = canvas.height;
         this.targetY = canvas.height * 0.08 + Math.random() * canvas.height * 0.35;
         this.speed = 4 + Math.random() * 3;
@@ -60,18 +64,18 @@ class Firework {
 
         switch (type) {
             case 'circle': {
-                const count = Math.floor(70 * m);
+                const count = Math.floor(120 * m); // Tăng từ 70
                 for (let i = 0; i < count; i++) {
                     const angle = (Math.PI * 2 / count) * i;
-                    const speed = 1.5 + Math.random() * 4;
+                    const speed = 2 + Math.random() * 6; // Tăng từ 1.5 - 4
                     const color = palette[Math.floor(Math.random() * palette.length)];
                     particles.push(new EnhancedParticle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, color, 'normal'));
                 }
                 break;
             }
             case 'ring': {
-                const count = Math.floor(60 * m);
-                const speed = 3 + Math.random() * 2;
+                const count = Math.floor(100 * m); // Tăng từ 60
+                const speed = 4 + Math.random() * 3; // Tăng từ 3 - 2
                 for (let i = 0; i < count; i++) {
                     const angle = (Math.PI * 2 / count) * i;
                     const color = palette[Math.floor(Math.random() * palette.length)];
@@ -80,35 +84,35 @@ class Firework {
                 break;
             }
             case 'willow': {
-                const count = Math.floor(50 * m);
+                const count = Math.floor(80 * m); // Tăng từ 50
                 for (let i = 0; i < count; i++) {
                     const angle = (Math.PI * 2 / count) * i;
-                    const speed = 1 + Math.random() * 3;
+                    const speed = 1.5 + Math.random() * 4; // Tăng từ 1 - 3
                     particles.push(new EnhancedParticle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, palette[0], 'willow'));
                 }
                 break;
             }
             case 'sparkle': {
-                const count = Math.floor(40 * m);
+                const count = Math.floor(100 * m); // Tăng từ 40
                 for (let i = 0; i < count; i++) {
                     const angle = Math.random() * Math.PI * 2;
-                    const speed = 0.5 + Math.random() * 5;
+                    const speed = 1 + Math.random() * 7; // Tăng từ 0.5 - 5
                     const color = palette[Math.floor(Math.random() * palette.length)];
                     particles.push(new EnhancedParticle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, color, 'sparkle'));
                 }
                 break;
             }
             case 'double': {
-                const innerC = Math.floor(30 * m);
-                const outerC = Math.floor(50 * m);
+                const innerC = Math.floor(50 * m);
+                const outerC = Math.floor(90 * m);
                 for (let i = 0; i < innerC; i++) {
                     const angle = (Math.PI * 2 / innerC) * i;
-                    const speed = 1 + Math.random() * 1.5;
+                    const speed = 2 + Math.random() * 2;
                     particles.push(new EnhancedParticle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, palette[0], 'normal'));
                 }
                 for (let i = 0; i < outerC; i++) {
                     const angle = (Math.PI * 2 / outerC) * i;
-                    const speed = 3 + Math.random() * 2;
+                    const speed = 4 + Math.random() * 4;
                     particles.push(new EnhancedParticle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, palette[1] || palette[0], 'normal'));
                 }
                 break;
@@ -148,29 +152,29 @@ class EnhancedParticle {
         this.trail = [];
         switch (type) {
             case 'willow':
-                this.decay = 0.004 + Math.random() * 0.006;
-                this.gravity = 0.06;
-                this.size = 1.5 + Math.random();
-                this.trailLen = 10;
+                this.decay = 0.003 + Math.random() * 0.005; // Cháy lâu hơn
+                this.gravity = 0.04;
+                this.size = 2 + Math.random() * 1.5; // To hơn
+                this.trailLen = 15;
                 break;
             case 'ring':
-                this.decay = 0.012 + Math.random() * 0.01;
-                this.gravity = 0.02;
-                this.size = 2 + Math.random() * 1.5;
-                this.trailLen = 3;
+                this.decay = 0.01 + Math.random() * 0.008;
+                this.gravity = 0.015;
+                this.size = 3 + Math.random() * 2; // To hơn
+                this.trailLen = 5;
                 break;
             case 'sparkle':
-                this.decay = 0.006 + Math.random() * 0.012;
-                this.gravity = 0.02;
-                this.size = 1 + Math.random() * 2.5;
-                this.trailLen = 6;
+                this.decay = 0.005 + Math.random() * 0.01;
+                this.gravity = 0.015;
+                this.size = 2 + Math.random() * 3; // To hơn
+                this.trailLen = 8;
                 this.twinkle = Math.random() * Math.PI;
                 break;
             default:
-                this.decay = 0.008 + Math.random() * 0.012;
-                this.gravity = 0.03;
-                this.size = 1.5 + Math.random() * 1.5;
-                this.trailLen = 5;
+                this.decay = 0.006 + Math.random() * 0.01;
+                this.gravity = 0.025;
+                this.size = 2.5 + Math.random() * 2; // To hơn
+                this.trailLen = 7;
         }
     }
 
@@ -446,11 +450,13 @@ function initMusicAndOverlay() {
                 if (musicDisc) musicDisc.classList.add('playing');
             }).catch(err => console.error("Playback failed:", err));
 
+            // Hiệu ứng pháo hoa chào mừng
+            launchIntroFireworks();
+
             // Ẩn màn hình chào
             welcomeOverlay.classList.add('hidden');
         });
     }
-
     // Logic dự phòng nếu người dùng cuộn hoặc tương tác khác
     const attemptPlay = () => {
         if (!musicPlaying) {
@@ -465,6 +471,33 @@ function initMusicAndOverlay() {
 
     document.addEventListener('scroll', attemptPlay);
     document.addEventListener('touchstart', attemptPlay);
+}
+
+// Hàm bắn pháo hoa chào mừng rực rỡ (chỉ ở 2 bên)
+function launchIntroFireworks() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+            const isLeft = Math.random() > 0.5;
+            const x = isLeft
+                ? Math.random() * (width * 0.25)
+                : width * 0.75 + Math.random() * (width * 0.25);
+
+            const y = height * 0.05 + Math.random() * height * 0.5;
+            triggerFireworkAt(x, y);
+
+            if (i % 3 === 0) {
+                setTimeout(() => {
+                    const sideX = isLeft
+                        ? Math.random() * (width * 0.25)
+                        : width * 0.75 + Math.random() * (width * 0.25);
+                    triggerFireworkAt(sideX, height * 0.2 + Math.random() * height * 0.3);
+                }, 150);
+            }
+        }, i * 250);
+    }
 }
 
 // Gọi hàm khởi tạo khi trang web tải xong
@@ -500,8 +533,9 @@ document.addEventListener('touchstart', (e) => {
 }, { passive: true });
 
 // =====================
-// PARALLAX ON SCROLL
+// PARALLAX & BOTTOM SCROLL FIREWORKS
 // =====================
+let reachedBottom = false;
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const hero = document.querySelector('.hero-content');
@@ -509,7 +543,31 @@ window.addEventListener('scroll', () => {
         hero.style.transform = `translateY(${scrolled * 0.3}px)`;
         hero.style.opacity = 1 - scrolled / 600;
     }
+
+    // Kiểm tra nếu cuộn xuống dưới cùng
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 20) {
+        if (!reachedBottom) {
+            launchSmallFooterFireworks();
+            reachedBottom = true;
+        }
+    } else {
+        reachedBottom = false;
+    }
 });
+
+function launchSmallFooterFireworks() {
+    for (let i = 0; i < 4; i++) {
+        setTimeout(() => {
+            const isLeft = Math.random() > 0.5;
+            const x = isLeft
+                ? Math.random() * (window.innerWidth * 0.25)
+                : window.innerWidth * 0.75 + Math.random() * (window.innerWidth * 0.25);
+
+            const y = 100 + Math.random() * (window.innerHeight * 0.4);
+            triggerFireworkAt(x, y);
+        }, i * 500);
+    }
+}
 
 // =====================
 // TYPING EFFECT FOR TITLE (optional enhancement)
