@@ -293,19 +293,73 @@ const bgMusic = document.getElementById('bg-music');
 const musicToggle = document.getElementById('music-toggle');
 
 function toggleMusic() {
+    const musicDisc = document.getElementById('rotating-disc');
+
     if (musicPlaying) {
         bgMusic.pause();
         musicToggle.querySelector('.music-icon').textContent = '🔇';
         musicPlaying = false;
+        if (musicDisc) musicDisc.classList.remove('playing');
     } else {
-        bgMusic.volume = 0.3;
-        bgMusic.play().catch(() => {
-            console.log('Autoplay blocked');
-        });
-        musicToggle.querySelector('.music-icon').textContent = '🔊';
-        musicPlaying = true;
+        bgMusic.volume = 0.5;
+        bgMusic.play()
+            .then(() => {
+                musicToggle.querySelector('.music-icon').textContent = '🔊'; // Unmuted speaker
+                musicPlaying = true;
+                if (musicDisc) musicDisc.classList.add('playing');
+            })
+            .catch((error) => {
+                console.error('Music playback failed:', error);
+                musicPlaying = false;
+                if (musicDisc) musicDisc.classList.remove('playing');
+                musicToggle.querySelector('.music-icon').textContent = '🔇';
+            });
     }
 }
+
+// Tự động phát nhạc hoặc chờ tương tác từ Welcome Overlay
+function initMusicAndOverlay() {
+    const welcomeOverlay = document.getElementById('welcome-overlay');
+    const startBtn = document.getElementById('start-btn');
+
+    // Thiết lập nhạc ban đầu
+    bgMusic.currentTime = 0;
+    bgMusic.volume = 0.5;
+
+    // Khi người dùng bấm nút "Khám phá"
+    if (startBtn && welcomeOverlay) {
+        startBtn.addEventListener('click', () => {
+            // Phát nhạc ngay lập tức (Trình duyệt sẽ cho phép vì có sự kiện click)
+            bgMusic.play().then(() => {
+                musicPlaying = true;
+                musicToggle.querySelector('.music-icon').textContent = '🔊';
+                const musicDisc = document.getElementById('rotating-disc');
+                if (musicDisc) musicDisc.classList.add('playing');
+            }).catch(err => console.error("Playback failed:", err));
+
+            // Ẩn màn hình chào
+            welcomeOverlay.classList.add('hidden');
+        });
+    }
+
+    // Logic dự phòng nếu người dùng cuộn hoặc tương tác khác
+    const attemptPlay = () => {
+        if (!musicPlaying) {
+            bgMusic.play().then(() => {
+                musicPlaying = true;
+                musicToggle.querySelector('.music-icon').textContent = '🔊';
+                document.removeEventListener('scroll', attemptPlay);
+                document.removeEventListener('touchstart', attemptPlay);
+            }).catch(err => { });
+        }
+    };
+
+    document.addEventListener('scroll', attemptPlay);
+    document.addEventListener('touchstart', attemptPlay);
+}
+
+// Gọi hàm khởi tạo khi trang web tải xong
+window.addEventListener('load', initMusicAndOverlay);
 
 // =====================
 // SPARKLE ON CLICK

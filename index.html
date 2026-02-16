@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌸 Chúc Mừng Năm Mới 2026 - Gửi Người Yêu 🌸</title>
+    <title>🌸 Chúc Mừng Năm Mới 2026 Xuân Bính Ngọ - Tết đầy yêu thương 🌸</title>
     <meta name="description" content="Thiệp chúc mừng năm mới 2026 dành tặng người yêu thương">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +15,16 @@
 </head>
 
 <body>
+    <!-- Welcome Overlay -->
+    <div id="welcome-overlay">
+        <div class="welcome-content">
+            <div class="welcome-horse-icon">🐴</div>
+            <h1 class="welcome-title">Chúc Mừng Năm Mới 2026</h1>
+            <p class="welcome-subtitle">Anh có một món quà nhỏ dành cho em...</p>
+            <button id="start-btn">Khám phá ngay ✨</button>
+        </div>
+    </div>
+
     <!-- Fireworks Canvas -->
     <canvas id="fireworks-canvas"></canvas>
 
@@ -59,7 +69,7 @@
                     <span class="title-line title-line-2">Năm Mới</span>
                 </h1>
                 <div class="subtitle-wrapper">
-                    <p class="subtitle">✨ Bính Ngọ - Năm con Ngựa ✨</p>
+                    <p class="subtitle">✨ Xuân Bính Ngọ - Tết đầy yêu thương ✨</p>
                 </div>
                 <div class="scroll-indicator">
                     <div class="scroll-arrow"></div>
@@ -75,12 +85,15 @@
                 <div class="love-card animate-on-scroll">
                     <div class="card-decoration card-decoration-top">🌸🌺🌸</div>
                     <div class="heart-icon">💕</div>
-                    <h2>Gửi Đến Người Anh/Em Yêu</h2>
+                    <h2>Gửi Đến Người Anh Yêu</h2>
+                    <div class="love-photo-wrapper">
+                        <img src="ngoc_and_vui.jpg" alt="Ngọc và Vui" class="love-photo">
+                    </div>
                     <div class="letter-content">
-                        <p class="letter-greeting">Người yêu ơi,</p>
-                        <p>Năm mới đến rồi, anh/em muốn gửi đến người yêu thương nhất những lời chúc tốt đẹp nhất. 🌟
+                        <p class="letter-greeting">Vui yêu ơi,</p>
+                        <p>Năm mới đến rồi, anh muốn gửi đến người anh yêu thương nhất những lời chúc tốt đẹp nhất. 🌟
                         </p>
-                        <p>Cảm ơn em/anh đã luôn ở bên, cùng nhau trải qua mọi vui buồn. Năm mới này, anh/em chúc chúng
+                        <p>Cảm ơn em đã luôn ở bên, cùng nhau trải qua mọi vui buồn. Năm mới này, anh chúc chúng
                             mình sẽ:</p>
                         <ul class="wish-list">
                             <li class="wish-item animate-on-scroll">
@@ -89,7 +102,7 @@
                             </li>
                             <li class="wish-item animate-on-scroll">
                                 <span class="wish-icon">💖</span>
-                                <span>Sức khỏe dồi dào, nhiều niềm vui</span>
+                                <span>Sức khỏe dồi dào, có nhiều niềm vui mới</span>
                             </li>
                             <li class="wish-item animate-on-scroll">
                                 <span class="wish-icon">✨</span>
@@ -97,14 +110,14 @@
                             </li>
                             <li class="wish-item animate-on-scroll">
                                 <span class="wish-icon">🎋</span>
-                                <span>Cùng nhau xây dựng tổ ấm hạnh phúc</span>
+                                <span>Cùng nhau xây dựng hạnh phúc tương lai</span>
                             </li>
                             <li class="wish-item animate-on-scroll">
                                 <span class="wish-icon">🌙</span>
                                 <span>Mãi bên nhau, yêu nhau trọn đời</span>
                             </li>
                         </ul>
-                        <p class="letter-closing">Yêu em/anh nhiều lắm! 💗</p>
+                        <p class="letter-closing">Yêu em bé của anh nhiều lắm! 💗</p>
                     </div>
                     <div class="card-decoration card-decoration-bottom">🌸🌺🌸</div>
                 </div>
@@ -168,7 +181,7 @@
                 <div class="promise-cards">
                     <div class="promise-card animate-on-scroll" style="--delay: 0.1s">
                         <div class="promise-number">01</div>
-                        <p>Sẽ luôn nắm tay em/anh đi qua mọi mùa</p>
+                        <p>Sẽ luôn nắm tay em đi qua mọi mùa</p>
                         <div class="promise-flower">🌷</div>
                     </div>
                     <div class="promise-card animate-on-scroll" style="--delay: 0.2s">
@@ -178,13 +191,51 @@
                     </div>
                     <div class="promise-card animate-on-scroll" style="--delay: 0.3s">
                         <div class="promise-number">03</div>
-                        <p>Sẽ yêu em/anh nhiều hơn mỗi ngày</p>
+                        <p>Sẽ yêu em nhiều hơn mỗi ngày</p>
                         <div class="promise-flower">🌹</div>
                     </div>
                     <div class="promise-card animate-on-scroll" style="--delay: 0.4s">
                         <div class="promise-number">04</div>
                         <p>Sẽ mãi là bến bờ bình yên của nhau</p>
                         <div class="promise-flower">🏵️</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery Section -->
+        <section class="music-section" id="photo-gallery-section"
+            style="padding: 80px 0; background: linear-gradient(180deg, var(--bg-dark) 0%, #2d0a0a 50%, var(--bg-dark) 100%);">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">📸 Khoảnh Khắc Đôi Ta 📸</h2>
+                <p style="text-align: center; color: var(--gold-primary); margin-bottom: 30px;">(Vuốt sang trái để xem
+                    thêm hình ảnh kỷ niệm của chúng mình nhé 💕)</p>
+
+                <div class="gallery-scroll-container">
+                    <!-- Photo 1 -->
+                    <div class="photo-card">
+                        <img src="https://picsum.photos/400/600?random=1" alt="Ky niem 1" class="photo-img">
+                        <div class="photo-desc">Lần đầu mình gặp nhau 🌸</div>
+                    </div>
+                    <!-- Photo 2 -->
+                    <div class="photo-card">
+                        <img src="https://picsum.photos/400/600?random=2" alt="Ky niem 2" class="photo-img">
+                        <div class="photo-desc">Chuyến đi chơi xa đầu tiên 🚗</div>
+                    </div>
+                    <!-- Photo 3 -->
+                    <div class="photo-card">
+                        <img src="https://picsum.photos/400/600?random=3" alt="Ky niem 3" class="photo-img">
+                        <div class="photo-desc">Những ngày bình yên bên nhau ☕</div>
+                    </div>
+                    <!-- Photo 4 -->
+                    <div class="photo-card">
+                        <img src="https://picsum.photos/400/600?random=4" alt="Ky niem 4" class="photo-img">
+                        <div class="photo-desc">Cùng đón giao thừa 🎆</div>
+                    </div>
+                    <!-- Photo 5 -->
+                    <div class="photo-card">
+                        <img src="https://picsum.photos/400/600?random=5" alt="Ky niem 5" class="photo-img">
+                        <div class="photo-desc">Yêu em nhiều lắm! ❤️</div>
                     </div>
                 </div>
             </div>
@@ -198,6 +249,10 @@
                 <p class="footer-year">Tết Bính Ngọ ~ 2026</p>
                 <div class="footer-blossoms">🌸🌺🌸🌺🌸</div>
             </div>
+            <div class="footer-copyright">
+                <p>© 2026 Nguyễn Tuấn Ngọc. All rights reserved.</p>
+                <p>Made with ❤️ for my love</p>
+            </div>
         </footer>
     </main>
 
@@ -207,9 +262,13 @@
     </button>
 
     <!-- Audio -->
-    <audio id="bg-music" loop>
-        <source src="ngay_long_phung_sum_vay.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bg-music" src="ngay_long_phung_sum_vay.mp3" loop autoplay></audio>
+
+    <!-- Floating Horses -->
+    <div class="floating-horses">
+        <img src="ngua_duc.png" alt="Ngựa Đức" class="horse horse-left">
+        <img src="ngua_cai.png" alt="Ngựa Cái" class="horse horse-right">
+    </div>
 
     <script src="script.js"></script>
 </body>
