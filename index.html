@@ -60,6 +60,10 @@
         <section class="hero" id="hero">
             <div class="hero-overlay"></div>
             <div class="hero-content">
+                <div class="hero-horses">
+                    <img src="ngua_duc.png" alt="Ngựa Đức" class="hero-horse hero-horse-left">
+                    <img src="ngua_cai.png" alt="Ngựa Cái" class="hero-horse hero-horse-right">
+                </div>
                 <div class="year-badge animate-pop">
                     <span class="zodiac-icon">🐴</span>
                     <span class="year-text">2026</span>
@@ -157,19 +161,31 @@
         <section class="interactive-section" id="interactive">
             <div class="container">
                 <div class="envelope-wrapper animate-on-scroll">
-                    <h2 class="section-title">💌 Lì Xì May Mắn 💌</h2>
-                    <p class="envelope-desc">Nhấn vào phong bao để nhận lời chúc may mắn nhé!</p>
-                    <div class="envelope" id="envelope" onclick="openEnvelope()">
-                        <div class="envelope-flap"></div>
-                        <div class="envelope-body">
-                            <div class="envelope-letter" id="envelope-letter">
-                                <p id="lucky-message">Nhấn vào mình đi! 💕</p>
+                    <h2 class="section-title">🧧 Lì Xì May Mắn 🧧</h2>
+                    <p class="envelope-desc">Chạm vào bao lì xì để nhận lời chúc may mắn nhé!</p>
+
+                    <div class="lixi-container" id="envelope" onclick="openEnvelope()">
+                        <!-- Bao lì xì -->
+                        <div class="lixi-envelope">
+                            <div class="lixi-flap"></div>
+                            <div class="lixi-body">
+                                <div class="lixi-pattern"></div>
+                                <div class="lixi-gold-circle">
+                                    <span>福</span>
+                                </div>
+                                <div class="lixi-text-bottom">恭喜發財</div>
                             </div>
                         </div>
-                        <div class="envelope-gold-text">
-                            <span>恭喜發財</span>
+
+                        <!-- Lá thư bay lên -->
+                        <div class="lixi-letter" id="envelope-letter">
+                            <div class="lixi-letter-deco">🌸</div>
+                            <p id="lucky-message">Chạm vào mình đi nào! 💕</p>
+                            <div class="lixi-letter-deco">🌸</div>
                         </div>
                     </div>
+
+                    <p class="envelope-hint" id="envelope-hint">👆 Nhấn để mở</p>
                 </div>
             </div>
         </section>
@@ -214,28 +230,63 @@
                 <div class="gallery-scroll-container">
                     <!-- Photo 1 -->
                     <div class="photo-card">
-                        <img src="https://picsum.photos/400/600?random=1" alt="Ky niem 1" class="photo-img">
+                        <img src="assets\725a7c20-3677-4c02-9feb-459187ea7e3b.jpg" alt="Ky niem 1" class="photo-img">
                         <div class="photo-desc">Lần đầu mình gặp nhau 🌸</div>
                     </div>
                     <!-- Photo 2 -->
                     <div class="photo-card">
-                        <img src="https://picsum.photos/400/600?random=2" alt="Ky niem 2" class="photo-img">
-                        <div class="photo-desc">Chuyến đi chơi xa đầu tiên 🚗</div>
+                        <img src="assets\bd008d9a-52f1-44e9-82aa-21a1e23d5e73.jpg" alt="Ky niem 2" class="photo-img">
+                        <div class="photo-desc">Chuyến đi chơi đêm siêu muộn 🌃🚗</div>
                     </div>
                     <!-- Photo 3 -->
                     <div class="photo-card">
-                        <img src="https://picsum.photos/400/600?random=3" alt="Ky niem 3" class="photo-img">
+                        <img src="assets\d297c95b-e0bd-490c-826b-189b1a57870c.jpg" alt="Ky niem 3" class="photo-img">
                         <div class="photo-desc">Những ngày bình yên bên nhau ☕</div>
                     </div>
+
                     <!-- Photo 4 -->
                     <div class="photo-card">
-                        <img src="https://picsum.photos/400/600?random=4" alt="Ky niem 4" class="photo-img">
-                        <div class="photo-desc">Cùng đón giao thừa 🎆</div>
+                        <img src="assets\19ef6a0e-5ec6-4cf8-8d71-5cdbab2b227a.jpg" alt="Ky niem 4" class="photo-img">
+                        <div class="photo-desc">Minh chứng tình yêu - Bút sa gà không chết ✍️📜</div>
                     </div>
+
                     <!-- Photo 5 -->
                     <div class="photo-card">
-                        <img src="https://picsum.photos/400/600?random=5" alt="Ky niem 5" class="photo-img">
-                        <div class="photo-desc">Yêu em nhiều lắm! ❤️</div>
+                        <img src="assets\86260211-ac9b-4020-adee-1bf829482760.jpg" alt="Ky niem 5" class="photo-img">
+                        <div class="photo-desc">8/3 đầu tiên với em bé yêu 💐💖</div>
+                    </div>
+
+                    <!-- Photo 6 -->
+                    <div class="photo-card">
+                        <img src="assets\57d1e9ae-1193-4874-9d02-d1d169f96197.jpg" alt="Ky niem 6" class="photo-img">
+                        <div class="photo-desc">Tình yêu lan tỏa trong không gian điện ảnh! 🎬🍿</div>
+                    </div>
+
+                    <div class="photo-card">
+                        <img src="assets\1fab2590-0632-45d4-89c6-6515960b0b71.jpg" alt="Ky niem 6" class="photo-img">
+                        <div class="photo-desc">Hai em bé trong bóng đêm 🌑🫂</div>
+                    </div>
+
+                    <!-- Photo 7 -->
+                    <div class="photo-card">
+                        <img src="assets\62ea0541-2b06-4016-9543-f6b7f5d7135d.jpg" alt="Ky niem 7" class="photo-img">
+                        <div class="photo-desc">Mừng ebe bảo vệ khóa luận nè 🎓🎉</div>
+                    </div>
+
+                    <!-- Photo 8 -->
+                    <div class="photo-card">
+                        <img src="assets\a0da53cb-6bcc-4a2e-bfb9-69c67f11636d.jpg" alt="Ky niem 8" class="photo-img">
+                        <div class="photo-desc">Phố cổ Hoa Lư - mảnh đất có hai ta ⛩️🏰</div>
+                    </div>
+                    <!-- Photo 6 -->
+                    <div class="photo-card">
+                        <img src="assets\e94f3d40-5fe3-4084-9484-1cc515f51ac3.jpg" alt="Ky niem 5" class="photo-img">
+                        <div class="photo-desc">Lần đầu tiên đi chơi Ninh Bình 🛶🏔️</div>
+                    </div>
+
+                    <div class="photo-card">
+                        <img src="assets\0c161738-7833-43fc-afe5-1938ec9d93dd.jpg" alt="Ky niem 5" class="photo-img">
+                        <div class="photo-desc">Tết này vẫn có em! 🧧🏮</div>
                     </div>
                 </div>
             </div>
@@ -264,11 +315,7 @@
     <!-- Audio -->
     <audio id="bg-music" src="ngay_long_phung_sum_vay.mp3" loop autoplay></audio>
 
-    <!-- Floating Horses -->
-    <div class="floating-horses">
-        <img src="ngua_duc.png" alt="Ngựa Đức" class="horse horse-left">
-        <img src="ngua_cai.png" alt="Ngựa Cái" class="horse horse-right">
-    </div>
+
 
     <script src="script.js"></script>
 </body>

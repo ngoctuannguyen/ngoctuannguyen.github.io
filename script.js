@@ -3,7 +3,7 @@
    ============================================ */
 
 // =====================
-// FIREWORKS ANIMATION
+// FIREWORKS ANIMATION (Enhanced)
 // =====================
 const canvas = document.getElementById('fireworks-canvas');
 const ctx = canvas.getContext('2d');
@@ -17,23 +17,35 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
+// Bảng màu pháo hoa phong phú
+const fireworkPalettes = [
+    [[255, 215, 0], [255, 240, 100], [255, 180, 0]],
+    [[255, 80, 80], [255, 120, 120], [200, 30, 30]],
+    [[255, 182, 193], [255, 130, 170], [255, 200, 220]],
+    [[100, 200, 255], [150, 220, 255], [80, 160, 255]],
+    [[180, 130, 255], [200, 160, 255], [140, 100, 220]],
+    [[100, 255, 180], [150, 255, 200], [80, 220, 150]],
+    [[255, 255, 255], [255, 240, 220], [255, 200, 150]],
+];
+
+const EXPLOSION_TYPES = ['circle', 'ring', 'willow', 'sparkle', 'double'];
+
 class Firework {
     constructor() {
-        this.x = Math.random() * canvas.width;
+        this.x = canvas.width * 0.15 + Math.random() * canvas.width * 0.7;
         this.y = canvas.height;
-        this.targetY = Math.random() * canvas.height * 0.4 + 50;
-        this.speed = 3 + Math.random() * 3;
-        this.hue = Math.random() * 60 + 10; // Gold/Red range
+        this.targetY = canvas.height * 0.08 + Math.random() * canvas.height * 0.35;
+        this.speed = 4 + Math.random() * 3;
         this.alive = true;
         this.trail = [];
+        this.brightness = 0.6 + Math.random() * 0.4;
     }
 
     update() {
         this.trail.push({ x: this.x, y: this.y });
-        if (this.trail.length > 8) this.trail.shift();
-
+        if (this.trail.length > 12) this.trail.shift();
         this.y -= this.speed;
-
+        this.x += (Math.random() - 0.5) * 0.5;
         if (this.y <= this.targetY) {
             this.explode();
             this.alive = false;
@@ -41,119 +53,177 @@ class Firework {
     }
 
     explode() {
-        const colors = [
-            [255, 215, 0],   // Gold
-            [255, 100, 100], // Red
-            [255, 182, 193], // Pink
-            [255, 255, 200], // Light yellow
-            [255, 140, 0],   // Orange
-        ];
-        const color = colors[Math.floor(Math.random() * colors.length)];
+        const palette = fireworkPalettes[Math.floor(Math.random() * fireworkPalettes.length)];
+        const type = EXPLOSION_TYPES[Math.floor(Math.random() * EXPLOSION_TYPES.length)];
         const isMobile = window.innerWidth < 768;
-        const count = isMobile ? 30 + Math.floor(Math.random() * 20) : 60 + Math.floor(Math.random() * 40);
+        const m = isMobile ? 0.5 : 1; // Hệ số giảm cho mobile
 
-        for (let i = 0; i < count; i++) {
-            const angle = (Math.PI * 2 / count) * i;
-            const speed = 1 + Math.random() * 4;
-            particles.push(new Particle(
-                this.x,
-                this.y,
-                Math.cos(angle) * speed,
-                Math.sin(angle) * speed,
-                color
-            ));
+        switch (type) {
+            case 'circle': {
+                const count = Math.floor(70 * m);
+                for (let i = 0; i < count; i++) {
+                    const angle = (Math.PI * 2 / count) * i;
+                    const speed = 1.5 + Math.random() * 4;
+                    const color = palette[Math.floor(Math.random() * palette.length)];
+                    particles.push(new EnhancedParticle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, color, 'normal'));
+                }
+                break;
+            }
+            case 'ring': {
+                const count = Math.floor(60 * m);
+                const speed = 3 + Math.random() * 2;
+                for (let i = 0; i < count; i++) {
+                    const angle = (Math.PI * 2 / count) * i;
+                    const color = palette[Math.floor(Math.random() * palette.length)];
+                    particles.push(new EnhancedParticle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, color, 'ring'));
+                }
+                break;
+            }
+            case 'willow': {
+                const count = Math.floor(50 * m);
+                for (let i = 0; i < count; i++) {
+                    const angle = (Math.PI * 2 / count) * i;
+                    const speed = 1 + Math.random() * 3;
+                    particles.push(new EnhancedParticle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, palette[0], 'willow'));
+                }
+                break;
+            }
+            case 'sparkle': {
+                const count = Math.floor(40 * m);
+                for (let i = 0; i < count; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 0.5 + Math.random() * 5;
+                    const color = palette[Math.floor(Math.random() * palette.length)];
+                    particles.push(new EnhancedParticle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, color, 'sparkle'));
+                }
+                break;
+            }
+            case 'double': {
+                const innerC = Math.floor(30 * m);
+                const outerC = Math.floor(50 * m);
+                for (let i = 0; i < innerC; i++) {
+                    const angle = (Math.PI * 2 / innerC) * i;
+                    const speed = 1 + Math.random() * 1.5;
+                    particles.push(new EnhancedParticle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, palette[0], 'normal'));
+                }
+                for (let i = 0; i < outerC; i++) {
+                    const angle = (Math.PI * 2 / outerC) * i;
+                    const speed = 3 + Math.random() * 2;
+                    particles.push(new EnhancedParticle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, palette[1] || palette[0], 'normal'));
+                }
+                break;
+            }
         }
     }
 
     draw() {
-        // Trail
         for (let i = 0; i < this.trail.length; i++) {
-            const alpha = i / this.trail.length * 0.5;
+            const alpha = (i / this.trail.length) * 0.6 * this.brightness;
+            const size = (i / this.trail.length) * 2.5;
             ctx.beginPath();
-            ctx.arc(this.trail[i].x, this.trail[i].y, 2, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 215, 0, ${alpha})`;
+            ctx.arc(this.trail[i].x, this.trail[i].y, size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 230, 150, ${alpha})`;
             ctx.fill();
         }
-
-        // Head
         ctx.beginPath();
         ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 200, 0.9)`;
+        ctx.fillStyle = `rgba(255, 255, 230, ${this.brightness})`;
         ctx.fill();
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = 'rgba(255, 215, 0, 0.8)';
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = `rgba(255, 215, 0, ${this.brightness})`;
         ctx.fill();
         ctx.shadowBlur = 0;
     }
 }
 
-class Particle {
-    constructor(x, y, vx, vy, color) {
+class EnhancedParticle {
+    constructor(x, y, vx, vy, color, type) {
         this.x = x;
         this.y = y;
         this.vx = vx;
         this.vy = vy;
         this.color = color;
+        this.type = type;
         this.alpha = 1;
-        this.decay = 0.008 + Math.random() * 0.015;
-        this.gravity = 0.03;
-        this.size = 1.5 + Math.random() * 1.5;
         this.trail = [];
+        switch (type) {
+            case 'willow':
+                this.decay = 0.004 + Math.random() * 0.006;
+                this.gravity = 0.06;
+                this.size = 1.5 + Math.random();
+                this.trailLen = 10;
+                break;
+            case 'ring':
+                this.decay = 0.012 + Math.random() * 0.01;
+                this.gravity = 0.02;
+                this.size = 2 + Math.random() * 1.5;
+                this.trailLen = 3;
+                break;
+            case 'sparkle':
+                this.decay = 0.006 + Math.random() * 0.012;
+                this.gravity = 0.02;
+                this.size = 1 + Math.random() * 2.5;
+                this.trailLen = 6;
+                this.twinkle = Math.random() * Math.PI;
+                break;
+            default:
+                this.decay = 0.008 + Math.random() * 0.012;
+                this.gravity = 0.03;
+                this.size = 1.5 + Math.random() * 1.5;
+                this.trailLen = 5;
+        }
     }
 
     update() {
         this.trail.push({ x: this.x, y: this.y, alpha: this.alpha });
-        if (this.trail.length > 5) this.trail.shift();
-
-        this.vx *= 0.99;
+        if (this.trail.length > this.trailLen) this.trail.shift();
+        this.vx *= 0.985;
         this.vy += this.gravity;
         this.x += this.vx;
         this.y += this.vy;
         this.alpha -= this.decay;
+        if (this.type === 'sparkle') this.twinkle += 0.3;
     }
 
     draw() {
-        // Trail
         for (let i = 0; i < this.trail.length; i++) {
             const t = this.trail[i];
-            const a = (i / this.trail.length) * t.alpha * 0.3;
+            const a = (i / this.trail.length) * t.alpha * 0.35;
             ctx.beginPath();
-            ctx.arc(t.x, t.y, this.size * 0.5, 0, Math.PI * 2);
+            ctx.arc(t.x, t.y, this.size * 0.4, 0, Math.PI * 2);
             ctx.fillStyle = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${a})`;
             ctx.fill();
         }
-
-        // Particle
+        let dAlpha = this.alpha;
+        if (this.type === 'sparkle') dAlpha *= 0.5 + 0.5 * Math.sin(this.twinkle);
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${this.alpha})`;
+        ctx.fillStyle = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${dAlpha})`;
         ctx.fill();
-
-        // Glow
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${this.alpha * 0.5})`;
-        ctx.fill();
-        ctx.shadowBlur = 0;
+        if (dAlpha > 0.3) {
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = `rgba(${this.color[0]}, ${this.color[1]}, ${this.color[2]}, ${dAlpha * 0.6})`;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
     }
 }
 
 let lastFirework = 0;
-const fireworkInterval = 1200;
+const fireworkInterval = 800;
 
 function animateFireworks() {
     requestAnimationFrame(animateFireworks);
-
     ctx.globalCompositeOperation = 'destination-out';
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.globalCompositeOperation = 'lighter';
 
     const now = Date.now();
-    if (now - lastFirework > fireworkInterval + Math.random() * 1500) {
+    if (now - lastFirework > fireworkInterval + Math.random() * 1200) {
         fireworks.push(new Firework());
-        if (Math.random() > 0.5) {
-            fireworks.push(new Firework());
-        }
+        if (Math.random() > 0.4) fireworks.push(new Firework());
+        if (Math.random() > 0.75) fireworks.push(new Firework());
         lastFirework = now;
     }
 
@@ -171,6 +241,16 @@ function animateFireworks() {
 }
 
 animateFireworks();
+
+// Hàm trigger pháo hoa tại vị trí cụ thể (cho Lì Xì)
+function triggerFireworkAt(x, y) {
+    const fw = new Firework();
+    fw.x = x;
+    fw.y = canvas.height; // Bắn từ dưới lên
+    fw.targetY = y;
+    fw.speed = 12; // Bay nhanh hơn cho hiệu ứng tức thì
+    fireworks.push(fw);
+}
 
 // =====================
 // FALLING PETALS
@@ -228,13 +308,14 @@ const luckyMessages = [
     "Năm mới bên nhau, hạnh phúc mãi mãi! 💕",
     "Tình yêu đôi ta vững bền như núi! 🏔️💖",
     "Năm mới thật nhiều niềm vui bên nhau! 🎊",
-    "Yêu em/anh hơn cả ngàn lần! ❤️🔥",
+    "Yêu em hơn cả ngàn lần! ❤️🔥",
     "Chúc mình mãi là đôi uyên ương! 🦢💗",
     "An khang thịnh vượng, tình yêu viên mãn! 🧧",
     "Cùng nhau đón trọn vạn mùa xuân! 🌸💑",
     "Bên nhau là Tết, xa nhau là nhớ! 💌",
     "Năm mới, tình cũ vẫn nồng nàn! 🔥❤️",
-    "Chúc đôi ta luôn cười thật tươi! 😊💕"
+    "Chúc đôi ta luôn cười thật tươi! 😊💕",
+    "Woa, chúc mừng bé đã được lì xì của anh. Ting ting!"
 ];
 
 let envelopeOpened = false;
@@ -244,16 +325,17 @@ function openEnvelope() {
     const messageEl = document.getElementById('lucky-message');
 
     if (envelopeOpened) {
-        // Reset and show new message
+        // Đóng lại trước, rồi mở ra với lời chúc mới
         envelope.classList.remove('opened');
         envelopeOpened = false;
+
         setTimeout(() => {
             const randomMsg = luckyMessages[Math.floor(Math.random() * luckyMessages.length)];
             messageEl.textContent = randomMsg;
             envelope.classList.add('opened');
             envelopeOpened = true;
             createCelebration(envelope);
-        }, 600);
+        }, 500);
     } else {
         const randomMsg = luckyMessages[Math.floor(Math.random() * luckyMessages.length)];
         messageEl.textContent = randomMsg;
@@ -269,19 +351,26 @@ function createCelebration(element) {
     const centerY = rect.top + rect.height / 2;
     const celebrationEmojis = ['✨', '🌟', '💫', '⭐', '🎊', '❤️', '💖', '🧧'];
 
+    // 1. Pháo hoa Canvas
+    // Bắn 3 quả pháo hoa xung quanh vị trí bao lì xì
+    triggerFireworkAt(centerX, centerY - 50);
+    setTimeout(() => triggerFireworkAt(centerX - 80, centerY - 100), 200);
+    setTimeout(() => triggerFireworkAt(centerX + 80, centerY - 100), 400);
+
+    // 2. Sparkle Emojis (giữ nguyên)
     for (let i = 0; i < 15; i++) {
         setTimeout(() => {
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
             sparkle.textContent = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
             const angle = (Math.PI * 2 / 15) * i;
-            const distance = 60 + Math.random() * 80;
+            const distance = 80 + Math.random() * 100;
             sparkle.style.left = (centerX + Math.cos(angle) * distance) + 'px';
             sparkle.style.top = (centerY + Math.sin(angle) * distance) + 'px';
-            sparkle.style.fontSize = (12 + Math.random() * 16) + 'px';
+            sparkle.style.fontSize = (14 + Math.random() * 20) + 'px';
             document.body.appendChild(sparkle);
 
-            setTimeout(() => sparkle.remove(), 1000);
+            setTimeout(() => sparkle.remove(), 1200);
         }, i * 50);
     }
 }
