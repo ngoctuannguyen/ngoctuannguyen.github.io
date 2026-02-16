@@ -35,10 +35,10 @@ class Firework {
         // Chỉ xuất hiện ở 2 bên (25% lề trái hoặc 25% lề phải)
         const isLeft = Math.random() > 0.5;
         this.x = isLeft
-            ? Math.random() * (canvas.width * 0.25)
-            : canvas.width * 0.75 + Math.random() * (canvas.width * 0.25);
+            ? Math.random() * (canvas.width * 0.05)
+            : canvas.width * 0.75 + Math.random() * (canvas.width * 0.05);
         this.y = canvas.height;
-        this.targetY = canvas.height * 0.08 + Math.random() * canvas.height * 0.35;
+        this.targetY = canvas.height * 0.08 + Math.random() * canvas.height * 0.05;
         this.speed = 4 + Math.random() * 3;
         this.alive = true;
         this.trail = [];
