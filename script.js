@@ -9,6 +9,8 @@ const canvas = document.getElementById('fireworks-canvas');
 const ctx = canvas.getContext('2d');
 let fireworks = [];
 let particles = [];
+const MAX_PARTICLES = 600; // Giới hạn tối đa số lượng hạt
+const heroContent = document.querySelector('.hero-content'); // Cache element
 
 function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -82,19 +84,19 @@ class Firework {
                 break;
             }
             case 'willow': {
-                const count = Math.floor(60 * m);
+                const count = Math.floor(40 * m);
                 for (let i = 0; i < count; i++) {
                     const angle = (Math.PI * 2 / count) * i;
-                    const speed = 1.5 + Math.random() * 4; // Tăng từ 1 - 3
+                    const speed = 1.5 + Math.random() * 4;
                     particles.push(new EnhancedParticle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, palette[0], 'willow'));
                 }
                 break;
             }
             case 'sparkle': {
-                const count = Math.floor(70 * m);
+                const count = Math.floor(50 * m);
                 for (let i = 0; i < count; i++) {
                     const angle = Math.random() * Math.PI * 2;
-                    const speed = 1 + Math.random() * 7; // Tăng từ 0.5 - 5
+                    const speed = 1 + Math.random() * 7;
                     const color = palette[Math.floor(Math.random() * palette.length)];
                     particles.push(new EnhancedParticle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, color, 'sparkle'));
                 }
@@ -208,6 +210,11 @@ function animateFireworks() {
         p.draw();
         return p.alpha > 0.01;
     });
+
+    // Cắt bớt nếu quá nhiều hạt để tránh lag
+    if (particles.length > MAX_PARTICLES) {
+        particles.splice(0, particles.length - MAX_PARTICLES);
+    }
 }
 
 animateFireworks();
@@ -245,7 +252,7 @@ function createPetal() {
 }
 
 // Create petals periodically
-setInterval(createPetal, 1000);
+setInterval(createPetal, 1500); // Tăng interval lên 1.5s
 // Initial batch
 for (let i = 0; i < 12; i++) {
     setTimeout(createPetal, i * 200);
@@ -504,10 +511,10 @@ document.addEventListener('touchstart', (e) => {
 let reachedBottom = false;
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero-content');
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.3}px)`;
-        hero.style.opacity = 1 - scrolled / 600;
+    if (heroContent) {
+        // Dùng translate3d để đẩy việc vẽ sang GPU
+        heroContent.style.transform = `translate3d(0, ${scrolled * 0.3}px, 0)`;
+        heroContent.style.opacity = 1 - scrolled / 600;
     }
 
     // Kiểm tra nếu cuộn xuống dưới cùng

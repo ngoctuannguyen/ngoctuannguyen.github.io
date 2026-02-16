@@ -1517,6 +1517,7 @@ main {
     height: auto;
     filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
     animation: gentleBounce 2.5s ease-in-out infinite;
+    will-change: transform;
 }
 
 .hero-horse-left {
@@ -1546,6 +1547,8 @@ main {
 
     .hero-horse {
         width: 90px;
+        filter: none;
+        /* Tắt filter nặng trên mobile */
     }
 }
 
@@ -1622,6 +1625,23 @@ main {
 /* Ẩn thông báo khi ở màn hình chào */
 #welcome-overlay:not(.hidden)~.pinned-notice {
     display: none;
+}
+
+/* Mobile Performance Optimization */
+@media (max-width: 768px) {
+
+    #welcome-overlay,
+    .love-card,
+    .pinned-notice,
+    .music-toggle {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(20, 5, 5, 0.95) !important;
+    }
+
+    .hero::before {
+        animation: none;
+    }
 }
 
 @media (max-width: 480px) {
